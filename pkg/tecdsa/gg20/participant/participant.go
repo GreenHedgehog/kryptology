@@ -9,17 +9,24 @@ package participant
 import (
 	"crypto/elliptic"
 	"fmt"
-	"github.com/coinbase/kryptology/pkg/core/curves"
-	"github.com/coinbase/kryptology/pkg/sharing/v1"
 	"math/big"
 	"reflect"
 
-	"github.com/coinbase/kryptology/pkg/tecdsa/gg20/dealer"
-
 	"github.com/coinbase/kryptology/internal"
 	"github.com/coinbase/kryptology/pkg/core"
+	"github.com/coinbase/kryptology/pkg/core/curves"
 	"github.com/coinbase/kryptology/pkg/paillier"
+	v1 "github.com/coinbase/kryptology/pkg/sharing/v1"
+	"github.com/coinbase/kryptology/pkg/tecdsa/gg20/dealer"
 )
+
+// NewParticipant creates a new participant with specific secret key share and decrypt key
+func NewParticipant(share dealer.Share, sk *paillier.SecretKey) *Participant {
+	return &Participant{
+		Share: share,
+		sk:    sk,
+	}
+}
 
 // Participant is a tECDSA player that receives information from a trusted dealer
 type Participant struct {
